@@ -1,4 +1,5 @@
-bind = "0.0.0.0:8080"
+from settings import APP_PORT
+bind = f"0.0.0.0:{APP_PORT}"
 workers = 8
 threads = 32
 timeout = 30
