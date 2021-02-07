@@ -1,7 +1,7 @@
 import os
 
 # WEB APPLICATION
-APP_PORT = 80
+APP_PORT = 8080
 
 # Upload safety
 ALLOWED_EXTENSIONS = {'txt'}
@@ -28,4 +28,4 @@ USE_TOR = bool(os.getenv('USE_TOR', False))
 TOR_HASHED_PASSWORD = os.getenv('TOR_HASHED_PASSWORD', 'henrique')
 
 # RETRIES NUMBER BEFORE RETURN NONE
-HTTP_RETRIES = 3
+HTTP_RETRIES = int(os.getenv('HTTP_RETRIES', 3))
