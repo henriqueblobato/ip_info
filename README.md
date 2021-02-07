@@ -38,3 +38,5 @@ export HTTP_RETRIES=3
 docker-compose up --build
 ```
 
+## Consideration
+Value filtering was not done using the back end, it is inserted in javascript using an input field above the table.
