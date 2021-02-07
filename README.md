@@ -9,6 +9,7 @@ The application flow happens as follows:
 ## Architecture
 Flask was chosen for its simplicity and agility of development.
 The non-relational Redis database was chosen because it has the quickest and easiest way to cache values in a scalable way. The entered values are in a key/value format, fully compatible with a python dictionary
+All requests point to the same location in order to facilitate future features. Using the tor network or not, we have a centralization of requests in tor.py
 
 ## Settings
 The environment variables below will be consumed by settings.py, which will be inserted in all the respective containers responsible for execution.
@@ -41,3 +42,4 @@ docker-compose up --build
 ## Consideration
 - Value filtering was not done using the back end, it is inserted in javascript using an input field above the table.
 - Due to a limit of information capture with rdap, the tor network was used to circumvent requests coming from a new ip every time we are blocked.
+- The project was done in a few hours over the weekend. Thanks for the learnings
