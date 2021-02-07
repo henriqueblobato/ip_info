@@ -6,7 +6,7 @@ The application flow happens as follows:
 - If the ip is already inserted in the database, the results are retrieved from there. If it is not, it will insert into the database.
 - If the ip is an exit node of the tor network, a tor icon will be shown just below the ip.
 
-## Archtecture
+## Architecture
 Flask was chosen for its simplicity and agility of development.
 The non-relational Redis database was chosen because it has the quickest and easiest way to cache values in a scalable way. The entered values are in a key/value format, fully compatible with a python dictionary
 
