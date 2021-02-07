@@ -1,7 +1,7 @@
 import os
 
 # WEB APPLICATION
-APP_PORT = 8080
+APP_PORT = 80
 
 # Upload safety
 ALLOWED_EXTENSIONS = {'txt'}

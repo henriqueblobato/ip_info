@@ -10,6 +10,7 @@ services:
             - tor_volume:/etc/tor/
         ports:
             - 8080:8080
+            - 80:80
             - 9050:9050
             - 9051:9051
         networks:

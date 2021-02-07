@@ -86,5 +86,5 @@ def db_set(ip, values):
     response = redis.set(ip, values)
     return response
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)

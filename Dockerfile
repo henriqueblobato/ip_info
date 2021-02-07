@@ -16,6 +16,7 @@ RUN ifconfig | grep inet
 
 RUN pip install -r "/tmp/requirements.txt"
 
+EXPOSE 80
 EXPOSE 8080
 EXPOSE 9050
 EXPOSE 9051
