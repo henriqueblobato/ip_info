@@ -4,10 +4,12 @@ import redis
 import requests
 
 class Redis():
-    def __init__(self) -> None:
-        self.host = os.getenv('REDIS_HOST', '127.0.0.1')
-        self.port = os.getenv('REDIS_PORT', '6379')
-        self.password = os.getenv('REDIS_PASSWORD', '')
+    def __init__(self, tor_instance, settings) -> None:
+        self.host = settings.REDIS_HOST
+        self.port = settings.REDIS_PORT
+        self.password = settings.REDIS_PASSWORD
+
+        self.tor_instance = tor_instance
 
         self.conn = redis.Redis(host=self.host,
                         port=self.port,
@@ -22,9 +24,9 @@ class Redis():
         return self.conn.set(key, str(values))
 
     def populate_with_tor_exit_nodes(self):
-        response = requests.get('https://check.torproject.org/exit-addresses')
+        response = self.tor_instance.session.get('https://check.torproject.org/exit-addresses')
         tor_ips = re.findall(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", response.text)
         for ip in tor_ips:
             self.conn.set(f'{ip}tor', 1)
-        print('Update tor exit node with', len(tor_ips), 'ips')
+        print('\n[!] Update tor exit node with', len(tor_ips), 'ips')
         pass

@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   </head>
   <body>
-
-      <input type="text" id="input" onkeyup="sort()" placeholder="Search for any word or ip" title="Type in a name">
+      {{ result_len }} ips loaded in {{ diff }} seconds
+      <input type="text" id="input" onkeyup="sort()" placeholder="Filter for any word or ip" title="Type in a name">
       <table id="table">
         <th>map</th>
         <th>ip</th>
@@ -19,23 +19,19 @@
         <th>Local Time</th>
         <th>ip range</th>
         <th>Address</th>
-        <!--
-        <th>rdap name</th>
-        <th>rdap Country</th>
-        <th>rdap type</th> -->
-        <!-- <th>loc</th> -->
         {% for ip in ips_info %}
           {% if ip %}
             <tr>
               <td>
                 <h10>{{ ip.geolocation.loc }}</h10></br>
-                <img width="200" height="100" src="https://maps.googleapis.com/maps/api/staticmap?center={{ ip.geolocation.loc }}&zoom=13&scale=1&size=200x100&maptype=roadmap&key=AIzaSyAuh_NUZ70rVeATaye3-jG22Ou-dTwVOpY&format=png&visual_refresh=true" alt="XXX">
+                <img width="200" height="100" src="https://maps.googleapis.com/maps/api/staticmap?center={{ ip.geolocation.loc }}&zoom=13&scale=1&size=200x100&maptype=roadmap&key=AIzaSyAuh_NUZ70rVeATaye3-jG22Ou-dTwVOpY&format=png&visual_refresh=true">
               </td>
               <td>
                 {{ ip.geolocation.ip }}</br>
                 {% if ip.is_tor %}
                   <img width="40" src="https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_60,h_60/https://dashboard.snapcraft.io/site_media/appmedia/2016/03/icon.svg.png" alt="">
-                  <span style="visibility: hidden">tor</span>
+                  </br>
+                  tor node
                 {% endif %}
               </td>
               <td>{{ ip.geolocation.hostname }}</td>
@@ -44,15 +40,10 @@
                 <img src="https://www.countryflags.io/{{ ip.geolocation.country }}/flat/32.png"></br>
                 {{ ip.geolocation.country }}
               </td>
-              <!-- <td>{{ ip.geolocation.country }}</td> -->
               <td>{{ ip.geolocation.org }}</td>
               <td>{{ ip.geolocation.postal }}</td>
-              <!-- <td>{{ ip.geolocation.timezone }}</td> -->
               <td>{{ ip.geolocation.timezone_formated }}</td>
               <td>{{ ip.rdap.handle }}</td>
-              <!-- <td>{{ ip.rdap.name }}</td>
-              <td>{{ ip.rdap.country }}</td>
-              <td>{{ ip.rdap.type }}</td> -->
               <td>{{ ip.rdap.address }}</td>
             </tr>
           {% endif %}

@@ -1,19 +1,22 @@
 import os
 
 # WEB APPLICATION
-APP_PORT = 8080
+APP_PORT = 5000
 
 # Upload safety
 ALLOWED_EXTENSIONS = {'txt'}
 CONTENT_TYPE_ALLOWED = ['text/plain']
 
 # Threading
-WORKERS = int(os.getenv('THREAD_WORKERS', 2**4))
+WORKERS = int(os.getenv('THREAD_WORKERS', 16))
+GUNICORN_WORKERS = int(os.getenv('GUNICORN_WORKERS', 1))
+GUNICORN_THREADS = int(os.getenv('GUNICORN_THREADS', 16))
+GUNICORN_TIMEOUT = int(os.getenv('GUNICORN_TIMEOUT', 60))
 
 # Redis
-HOST = os.getenv('REDIS_HOST', '172.16.0.101')
-PORT = os.getenv('REDIS_PORT', '6379')
-PASSWORD = os.getenv('REDIS_PASSWORD', '')
+REDIS_HOST = os.getenv('REDIS_HOST', 'localhost')
+REDIS_PORT = os.getenv('REDIS_PORT', '6379')
+REDIS_PASSWORD = os.getenv('REDIS_PASSWORD', '')
 
 # URLs
 IP_GEOLOCATION_URL = 'https://ipinfo.io/{}'

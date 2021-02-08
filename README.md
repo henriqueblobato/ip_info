@@ -8,7 +8,8 @@ The application flow happens as follows:
 
 ## Architecture
 Flask was chosen for its simplicity and agility of development.
-The non-relational Redis database was chosen because it has the quickest and easiest way to cache values in a scalable way. The entered values are in a key/value format, fully compatible with a python dictionary
+The non-relational Redis database was chosen because it has the quickest and easiest way to cache values in a scalable way. The entered values are in a key/value format, fully compatible with a python dictionary.
+Due to a limit of 1000 daily requests in rdap url, the tor network was used to change ips every time we were blocked, thus maintaining the continuous flow of the application.
 All requests point to the same location in order to facilitate future features. Using the tor network or not, we have a centralization of requests in tor.py
 
 ## Settings
@@ -28,7 +29,6 @@ export REDIS_PASSWORD=
 
 # USE TOR NETWORK
 export USE_TOR=False
-export TOR_HASHED_PASSWORD=henrique
 
 # RETRIES NUMBER BEFORE RETURN NONE
 export HTTP_RETRIES=3
@@ -36,7 +36,8 @@ export HTTP_RETRIES=3
 
 ## How to run
 ```
-docker-compose up --build
+$ make build
+$ make run
 ```
 
 ## Consideration

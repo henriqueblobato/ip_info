@@ -3,24 +3,28 @@ import requests
 
 class Geo:
 
-    def __init__(self, tor_instance):
+    def __init__(self, tor_instance, settings):
         self.tor_instance = tor_instance
+        self.settings = settings
 
     def get_geolocation(self, ip):
-        url = f'https://ipinfo.io/{ip}'
+        url = self.settings.IP_GEOLOCATION_URL
+        url = url.format(ip) #f'https://ipinfo.io/{ip}'
         response, status = self.tor_instance.get(url)
         if status!=200 or 'bogon' in response.keys():
             return {}
         try:
             response['org'] = ' '.join(response['org'].split()[1:])
-        except Exception as e:
-            print('org error', ip, format(e), type(e))
+        except KeyError as ke:
+            pass
         try:
-            time_there = self.tor_instance.get((f'http://worldtimeapi.org/api/timezone/{response.get("timezone")}'))
-            time_there = datetime.datetime.fromisoformat(time_there[0].get('datetime')).strftime('%D %H:%M:%S')
+            url = self.settings.TIMEZONE_URL
+            url = url.format(response.get("timezone"))
+            time_there = self.tor_instance.get(url)
+            time_there = datetime.datetime.fromisoformat(time_there[0].get('datetime')).strftime(self.settings.CLOCK_FORMAT)
             response['timezone_formated'] = time_there
         except Exception as e:
-            print('timezone error', ip, format(e), type(e))
+            pass
         return response
 
 # class GeoModel:
