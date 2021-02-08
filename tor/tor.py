@@ -34,7 +34,7 @@ class Tor:
                             controller.signal(Signal.NEWNYM)
                             self.current_ip = self.get_ip()
                         self.ip_lock = False
-                        sleep(30)
+                        sleep(3)
                     continue
                 return response.json(), response.status_code
             except Exception as e:
