@@ -1,16 +1,6 @@
 version: "3"
 
 services:
-    redis:
-        image: redis
-        ports:
-            - 6379:6379
-        networks:
-            sl_net:
-                ipv4_address: 172.16.0.102
-        extra_hosts: 
-            - 'localhost:172.16.0.101'
-
     flask:
         container_name: flask_app
         build:
@@ -28,9 +18,16 @@ services:
                 ipv4_address: 172.16.0.101
         extra_hosts: 
             - 'localhost:172.16.0.102'
-        depends_on: 
-            - redis
 
+    redis:
+        image: redis
+        ports:
+            - 6379:6379
+        networks:
+            sl_net:
+                ipv4_address: 172.16.0.102
+        extra_hosts: 
+            - 'localhost:172.16.0.101'
 volumes:
     tor_volume:
 
