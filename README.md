@@ -43,4 +43,4 @@ $ make run
 ## Consideration
 - Value filtering was not done using the back end, it is inserted in javascript using an input field above the table.
 - Due to a limit of information capture with rdap, the tor network was used to circumvent requests coming from a new ip every time we are blocked.
-- The project was done in a few hours over the weekend. Thanks for the learnings
+- The project was done in a few hours over the weekend. Thanks for the learnings.
