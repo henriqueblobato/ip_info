@@ -1,5 +1,7 @@
 import requests
 import json
+import sys
+import socket
 
 class Rdap():
 
@@ -19,3 +21,26 @@ class Rdap():
             return response
         except:
             return {}
+
+    def get_whois(self, ip) -> dict:
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.connect(("whois.arin.net", 43))
+        s.send((ip + "\r\n").encode())
+
+        response = b""
+        while True:
+            data = s.recv(4096)
+            response += data
+            if not data:
+                break
+        s.close()
+        response = response.decode().split('\n')
+
+        response = [i.strip() for i in response]
+        d = {}
+        for line in response:
+            if ':' in line:
+                name, value = line.split(':')
+                d[name] = value
+
+        return d
