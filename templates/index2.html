@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IP info</title>
+      <link rel="stylesheet" href="{{ url_for('static', filename='css/style2.css') }}">
+  </head>
+  <body>
+
+<section>
+
+  <h1>ip finder
+      <div class="webflow-style-input">
+        <input id="ipInput" class="ip_input" type="email" placeholder="Type your ip" onkeyup="checkIp()"></input>
+{#        <button type="submit">SEARCH</button>#}
+      </div>
+  </h1>
+
+  <div class="tbl-header">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <thead>
+        <tr>
+            <th>map</th>
+            <th>ip</th>
+            <th>Hostname</th>
+            <th>City/Country</th>
+            <th>Organization</th>
+            <th>Postal Code</th>
+            <th>Local Time</th>
+            <th>ip range</th>
+            <th>Address</th>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <div class="tbl-content">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <tbody>
+
+      {% for ip in ips_info %}
+          {% if ip %}
+            <tr>
+              <td>
+                <h10>{{ ip.geolocation.loc }}</h10></br>
+                <img width="200" height="100" src="https://maps.googleapis.com/maps/api/staticmap?center={{ ip.geolocation.loc }}&zoom=13&scale=1&size=200x100&maptype=roadmap&key=AIzaSyAuh_NUZ70rVeATaye3-jG22Ou-dTwVOpY&format=png&visual_refresh=true">
+              </td>
+              <td>
+                {{ ip.geolocation.ip }}</br>
+                {% if ip.is_tor %}
+                  <img width="40" src="https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_60,h_60/https://dashboard.snapcraft.io/site_media/appmedia/2016/03/icon.svg.png" alt="">
+                  </br>
+                  tor node
+                {% endif %}
+              </td>
+              <td>{{ ip.geolocation.hostname }}</td>
+              <td>
+                {{ ip.geolocation.city }}/{{ ip.geolocation.region }} </br>
+                <img src="https://www.countryflags.io/{{ ip.geolocation.country }}/flat/32.png"></br>
+                {{ ip.geolocation.country }}
+              </td>
+              <td>{{ ip.geolocation.org }}</td>
+              <td>{{ ip.geolocation.postal }}</td>
+              <td>{{ ip.geolocation.timezone_formated }}</td>
+              <td>{{ ip.rdap.handle }}</td>
+              <td>{{ ip.rdap.address }}</td>
+            </tr>
+          {% endif %}
+        {% endfor %}
+
+        <tr>
+          <td>XXD</td>
+          <td>ADITYA BIRLA</td>
+          <td>$1.02</td>
+          <td>-1.01</td>
+          <td>+2.36%</td>
+        </tr>
+
+
+      </tbody>
+    </table>
+  </div>
+</section>
+
+
+</body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+        const ipInputField = document.getElementById("ipInput");
+
+        let checkIp = () => {
+            if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipInputField.value)) {
+                console.log('ip ok');
+                ipInputField.disabled = true;
+
+                $.get(ipInputField.value, function(data, status){
+                  alert("Data: " + data + "\nStatus: " + status);
+                });
+            }
+        }
+
+    </script>
+
+</html>
