@@ -9,19 +9,6 @@ class Rdap():
         self.tor_instance = tor_instance
         self.settings = settings
 
-    def get_rdap(self, ip) -> dict:
-        try:
-            url = self.settings.IP_RDAP_INFO
-            url = url.format(ip)
-            response, status = self.tor_instance.get(url)
-            if 'remarks' in response.keys():
-                response['address'] = ' '.join(response['remarks'][0]['description'])
-            if status!=200:
-                raise Exception
-            return response
-        except:
-            return {}
-
     def get_whois(self, ip) -> dict:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.connect(("whois.arin.net", 43))
@@ -39,8 +26,28 @@ class Rdap():
         response = [i.strip() for i in response]
         d = {}
         for line in response:
-            if ':' in line:
-                name, value = line.split(':')
-                d[name] = value
+            if not line.startswith('#') and ':' in line:
+                try:
+                    name, value = line.split(':')
+                    if value:
+                        d[name] = value.strip()
+                except:
+                    continue
+            else:
+                continue
 
         return d
+
+    def get_rdap(self, ip) -> dict:
+        try:
+            url = self.settings.IP_RDAP_INFO
+            url = url.format(ip)
+            response, status = self.tor_instance.get(url)
+            if 'remarks' in response.keys():
+                response['address'] = ' '.join(response['remarks'][0]['description'])
+            if status!=200:
+                raise Exception
+            return response
+        except:
+            return {}
+
