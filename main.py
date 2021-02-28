@@ -2,7 +2,8 @@ import os
 import json
 import re
 import random
-from multiprocessing import Pool
+import threading
+from multiprocessing import Pool, Process
 from flask import Flask, render_template, request
 import time
 
@@ -23,38 +24,25 @@ redis = Redis(tor, settings)
 
 @app.route('/')
 def hello():
-    return render_template('index.html', port=APP_PORT)
+    public_ip = request.remote_addr
+    if not public_ip=='127.0.0.1':
+        result = handle(public_ip)
+    else:
+        result = {'ip':'', 'geolocation':'', 'rdap':''}
+    
+    return render_template('index2.html', port=APP_PORT, ip_info=result)
 
-@app.route('/list', methods = ['POST'])
+
+@app.route('/list', methods=['POST'])
 def list_():
-    result = []
     if request.method == 'POST':
-      f = request.files['file']
-      if f.mimetype not in CONTENT_TYPE_ALLOWED and f.filename.split('.')[-1] not in ALLOWED_EXTENSIONS:
-          return 'Please insert a valid file'
-      content = f.read()
-      content = content.decode('utf-8').split('\n')
-      
-      ip_list = []
-      for line in content:
-        ips_candidate = re.findall(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", line)
-        if not ips_candidate: continue
-        if len(ips_candidate)>1:
-            ip_list.extend(ips_candidate)
-        else:
-            ip_list.append(ips_candidate[0])
+        ip = request.form['ipForm']
+        if ip:
+            result = handle(ip)
+            print(result)
+            return render_template('list2.html', ip_info=result)
+        return render_template('list2.html', ip_info={})
 
-      try:
-        tic = time.time()
-        with Pool(WORKERS) as p:
-            result = p.map(handle, ip_list)
-            result = [i for i in result if i is not None]
-      except Exception as e:
-          print('[!] Error', type(e), format(e))
-          pass
-    result_len = len(result)
-    print('result_len:', result_len)
-    return render_template('list.html', ips_info=result, diff=round(time.time()-tic, 3), result_len=result_len)
 
 def handle(ip):
     redis_geo = redis.get(f'{ip}geo')
@@ -72,9 +60,9 @@ def handle(ip):
             status = redis.set(f'{ip}geo', json.dumps(geolocation))
     if redis_rdap:
         # print('Redis found rdap', ip)
-        ip_dict['rdap']=json.loads(redis_rdap)
+        ip_dict['rdap'] = json.loads(redis_rdap)
     else:
-        rdap_info = rdap.get_rdap(ip)
+        rdap_info = rdap.get_rdap(ip) # get whois
         ip_dict['rdap']=rdap_info
         if rdap_info:
             status = redis.set(f'{ip}rdap', json.dumps(rdap_info))
