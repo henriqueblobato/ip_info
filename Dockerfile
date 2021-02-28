@@ -24,4 +24,4 @@ EXPOSE 9051
 ENV FLASK_APP = /tmp/app.py
 ENV SERVER_NAME = '0.0.0.0'
 
-CMD ["gunicorn", "--config", "gunicorn_config.py", "main:app"]
+CMD ["gunicorn", "--config", "/tmp/gunicorn_config.py", "main:app"]
