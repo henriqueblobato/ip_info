@@ -8,7 +8,7 @@ ALLOWED_EXTENSIONS = {'txt'}
 CONTENT_TYPE_ALLOWED = ['text/plain']
 
 # Threading
-WORKERS = int(os.getenv('THREAD_WORKERS', 16))
+WORKERS = int(os.getenv('THREAD_WORKERS', 1))
 GUNICORN_WORKERS = int(os.getenv('GUNICORN_WORKERS', 1))
 GUNICORN_THREADS = int(os.getenv('GUNICORN_THREADS', 16))
 GUNICORN_TIMEOUT = int(os.getenv('GUNICORN_TIMEOUT', 60))
@@ -32,3 +32,5 @@ TOR_HASHED_PASSWORD = os.getenv('TOR_HASHED_PASSWORD', 'henrique')
 
 # RETRIES NUMBER BEFORE RETURN NONE
 HTTP_RETRIES = int(os.getenv('HTTP_RETRIES', 3))
+
+TOR_IPS = []
