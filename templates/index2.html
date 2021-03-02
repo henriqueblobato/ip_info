@@ -84,6 +84,20 @@
   </div>
 </section>
 
+{% if ip_info %}
+<div class="row">
+  <div class="column">
+    <img src="https://maps.googleapis.com/maps/api/staticmap?center={{ ip_info.geolocation.loc }}&zoom=10&scale=3&size=400x200&maptype=roadmap&key=AIzaSyAuh_NUZ70rVeATaye3-jG22Ou-dTwVOpY&format=png&visual_refresh=true">
+  </div>
+  <div class="column">
+    <img src="https://maps.googleapis.com/maps/api/staticmap?center={{ ip_info.geolocation.loc }}&zoom=14&scale=3&size=400x200&maptype=roadmap&key=AIzaSyAuh_NUZ70rVeATaye3-jG22Ou-dTwVOpY&format=png&visual_refresh=true">
+  </div>
+  <div class="column">
+    <img src="https://maps.googleapis.com/maps/api/staticmap?center={{ ip_info.geolocation.loc }}&zoom=17&scale=3&size=400x200&maptype=roadmap&key=AIzaSyAuh_NUZ70rVeATaye3-jG22Ou-dTwVOpY&format=png&visual_refresh=true">
+  </div>
+</div>
+{% endif %}
+
 </body>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </html>
