@@ -66,7 +66,7 @@
             State: {{ ip_info.geolocation.region }} </br>
           </td>
           <td>
-            {{ ip_info.geolocation.org }} /
+            {{ ip_info.geolocation.org }} / </br>
             {{ ip_info.whois.OrgName }}
           </td>
           <td>{{ ip_info.geolocation.postal }}</td>
@@ -79,8 +79,12 @@
           </td>
           <td>{{ ip_info.whois.NetRange }}</td>
           <td>
-            Adress: {{ ip_info.rdap.address }}
-            Adress: {{ ip_info.whois.Address }}
+            {% if ip_info.rdap.address %}
+              Adress: {{ ip_info.rdap.address }}
+            {% endif %}
+            {% if ip_info.whois.Address %}
+              Adress: {{ ip_info.whois.Address }}
+            {% endif %}
             Phone: {{ ip_info.whois.OrgTechPhone }}
           </td>
           {% endif %}
