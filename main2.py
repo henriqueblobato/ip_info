@@ -32,6 +32,7 @@ def root():
     
     if request.method == 'GET':    
         public_ip = request.headers.get('X-Forwarded-For')
+        print('[!] REQUEST FROM:', public_ip)
         show_your_ip=True
     
     if public_ip:# and not request.remote_addr == '127.0.0.1': # dev env
