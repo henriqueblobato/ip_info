@@ -49,8 +49,14 @@
                 </td>
                 {% if ip_info %}
                 <td>{{ ip_info.geolocation.hostname }}</td>
-                <td>{{ ip_info.geolocation.city }}</br>{{ ip_info.geolocation.region }} </br></td>
-                <td>{{ ip_info.geolocation.org }}</td>
+                <td>
+                  City: {{ ip_info.geolocation.city }}
+                  State: {{ ip_info.geolocation.region }} </br>
+                </td>
+                <td>
+                  {{ ip_info.geolocation.org }} /
+                  {{ ip_info.whois.OrgName }}
+                </td>
                 <td>{{ ip_info.geolocation.postal }}</td>
                 <td>
                   {% if ip_info.geolocation.timezone_formated %}
@@ -61,9 +67,9 @@
                 </td>
                 <td>{{ ip_info.whois.NetRange }}</td>
                 <td>
-                  {{ ip_info.rdap.address }}
-                  {{ ip_info.whois.OrgTechPhone }}
-                  {{ ip_info.whois.Address }}
+                  Adress: {{ ip_info.rdap.address }}
+                  Adress: {{ ip_info.whois.Address }}
+                  Phone: {{ ip_info.whois.OrgTechPhone }}
                 </td>
                 {% endif %}
               </tr>
