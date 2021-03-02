@@ -30,7 +30,6 @@ def hello():
     print('Got ip from --->', public_ip)
     if not public_ip == '127.0.0.1': # dev env
         result = handle(public_ip)
-        print('result --->', result)
     else:
         result = {'ip':'', 'geolocation':'', 'rdap':''}
     
@@ -43,7 +42,6 @@ def list_():
         ip = request.form['ipForm']
         if ip:
             result = handle(ip)
-            print('result list --->', result)
             return render_template('list2.html', ip_info=result)
         return render_template('list2.html', ip_info={})
 
@@ -61,7 +59,7 @@ def handle(ip):
     try:
         rdap_info = rdap.get_rdap(ip) # get whois
         ip_dict['rdap'] = rdap_info
-        print('rdap --->', rdap)
+        print('rdap --->', rdap_info)
     except Exception as e:
         print('[Error rdap]', format(e), type(e))
 
