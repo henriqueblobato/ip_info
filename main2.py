@@ -40,22 +40,36 @@ def list_():
         ip = request.form['ipForm']
         if ip:
             result = handle(ip)
+            print('result list --->', result)
             return render_template('list2.html', ip_info=result)
         return render_template('list2.html', ip_info={})
 
 
 def handle(ip):
-    
-    ip_dict = {'ip':ip}
-    geolocation = geo.get_geolocation(ip)
-    ip_dict['geolocation'] = geolocation
-            
-    rdap_info = rdap.get_rdap(ip) # get whois
-    ip_dict['rdap'] = rdap_info
 
-    whois_info = rdap.get_whois(ip) # get whois    
-    ip_dict['whois'] = whois_info
-    
+    ip_dict = {'ip':ip}
+    try:
+        geolocation = geo.get_geolocation(ip)
+        ip_dict['geolocation'] = geolocation
+        print('geolocation --->', geolocation)
+    except Exception as e:
+        print('[Error geolocation]', format(e), type(e))
+
+    try:
+        rdap_info = rdap.get_rdap(ip) # get whois
+        ip_dict['rdap'] = rdap_info
+        print('rdap --->', rdap)
+    except Exception as e:
+        print('[Error rdap]', format(e), type(e))
+
+    try:
+        whois_info = rdap.get_whois(ip) # get whois    
+        ip_dict['whois'] = whois_info
+        print('whois --->', whois_info)
+    except Exception as e:
+        print('[Error whois]', format(e), type(e))
+
+
     ip_dict['is_tor'] = True if ip in settings.TOR_IPS else False
 
     if not ip_dict['geolocation'] and not ip_dict['rdap']:
