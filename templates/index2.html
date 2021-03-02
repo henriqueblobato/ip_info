@@ -61,7 +61,8 @@
             {% endif %}
           </td>
           {% if ip_info %}
-          <td>{{ ip_info.geolocation.hostname }}</td>
+            <td>{{ ip_info.geolocation.hostname }}</td>
+          {% endif %}
           <td>
             {{ ip_info.geolocation.city }} </br>
             {{ ip_info.geolocation.region }} </br>
@@ -95,15 +96,14 @@
               Adress: {{ ip_info.whois.Address }}
             {% endif %}
             Phone: {{ ip_info.whois.OrgTechPhone }}
-          </td>
-          {% endif %}
+          </td>          
         </tr>
   </tbody>
     </table>
   </div>
 </section>
 
-{% if ip_info %}
+{% if ip_info.geolocation.loc %}
 <div class="row">
   <div class="column">
     <img src="https://maps.googleapis.com/maps/api/staticmap?center={{ ip_info.geolocation.loc }}&zoom=10&scale=3&size=400x200&maptype=roadmap&key=AIzaSyAuh_NUZ70rVeATaye3-jG22Ou-dTwVOpY&format=png&visual_refresh=true">
