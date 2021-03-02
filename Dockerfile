@@ -18,4 +18,4 @@ ENV SERVER_NAME = '0.0.0.0'
 
 # CMD ["python3", "main2.py"]
 # CMD ["gunicorn", "--config", "/tmp/gunicorn_config.py", "main:app"]
-CMD ["gunicorn", "main2:app"]
+CMD ["gunicorn", "app:main2"]
