@@ -54,6 +54,7 @@
               {% if ip_info.is_tor %}
                 <img width="40" src="https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_60,h_60/https://dashboard.snapcraft.io/site_media/appmedia/2016/03/icon.svg.png" alt="">
                 </br>
+                Yes
               {% else %}
                 No
               {% endif %}
@@ -62,14 +63,22 @@
           {% if ip_info %}
           <td>{{ ip_info.geolocation.hostname }}</td>
           <td>
-            City: {{ ip_info.geolocation.city }}
-            State: {{ ip_info.geolocation.region }} </br>
+            {{ ip_info.geolocation.city }} </br>
+            {{ ip_info.geolocation.region }} </br>
           </td>
           <td>
-            {{ ip_info.geolocation.org }} / </br>
-            {{ ip_info.whois.OrgName }}
+            {% if ip_info.geolocation.org %}
+              {{ ip_info.geolocation.org }} / </br>
+            {% else %}
+            {% if ip_info.whois.OrgName }
+              {{ ip_info.whois.OrgName }}
+            {% endif %}
           </td>
-          <td>{{ ip_info.geolocation.postal }}</td>
+          <td>
+            {% if ip_info.geolocation.postal %}
+              {{ ip_info.geolocation.postal }}
+            {% endif%}
+          </td>
           <td>
             {% if ip_info.geolocation.timezone_formated %}
               {{ ip_info.geolocation.timezone_formated }}
