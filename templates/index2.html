@@ -54,12 +54,14 @@
                 No
               {% endif %}
             </td>
-            <td>{{ ip_info.geolocation.city }}</br>{{ ip_info.geolocation.region }} </br></td>
-            <td>{{ ip_info.geolocation.org }}</td>
-            <td>{{ ip_info.geolocation.postal }}</td>
-            <td>{{ ip_info.geolocation.timezone_formated }}</td>
-            <td>{{ ip_info.rdap.handle }}</td>
-            <td>{{ ip_info.rdap.address }}</td>
+            {% if ip_info %}
+              <td>{{ ip_info.geolocation.city }}</br>{{ ip_info.geolocation.region }} </br></td>
+              <td>{{ ip_info.geolocation.org }}</td>
+              <td>{{ ip_info.geolocation.postal }}</td>
+              <td>{{ ip_info.geolocation.timezone_formated }}</td>
+              <td>{{ ip_info.rdap.handle }}</td>
+              <td>{{ ip_info.rdap.address }}</td>
+            {% endif %}
         </tr>
   </tbody>
     </table>
