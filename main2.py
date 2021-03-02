@@ -28,10 +28,10 @@ def hello():
     # public_ip = request.remote_addr
     public_ip = request.headers.get('X-Forwarded-For')
     print('Got ip from --->', public_ip)
-    if not public_ip == '127.0.0.1': # dev env
+    if public_ip and not request.remote_addr == '127.0.0.1': # dev env
         result = handle(public_ip)
     else:
-        result = {'ip':'', 'geolocation':'', 'rdap':''}
+        result = {'ip':'', 'geolocation':'', 'rdap':'', 'whois': ''}
     
     return render_template('index2.html', port=APP_PORT, ip_info=result, public_ip=public_ip)
 
