@@ -9,12 +9,14 @@
 <section>
 
   <h2>
+    {% if show_your_ip %}
     YOUR IP </br>
+    {% endif %}
     {{ public_ip }}
   </h2>
 
   <h1>
-      <form action="/list" method="post">
+      <form action="/" method="post">
       <br class="webflow-style-input">
         <input id="ipInput" class="ip_input" name="ipForm" placeholder="Type your ip" onkeyup="checkIp()"></input>
           </br>

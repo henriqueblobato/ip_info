@@ -21,29 +21,23 @@ for ip in tor_ips:
     settings.TOR_IPS.append(ip)
 print('\n[!] Updated tor exit node with', len(tor_ips), 'ips')
 
-@app.route('/')
-def hello():
-    # print('Cookies --->', request.cookies)
-    # print('Headers --->', request.headers)
-    # public_ip = request.remote_addr
-    public_ip = request.headers.get('X-Forwarded-For')
-    print('Got ip from --->', public_ip)
-    if public_ip and not request.remote_addr == '127.0.0.1': # dev env
-        result = handle(public_ip)
-    else:
-        result = {'ip':'', 'geolocation':'', 'rdap':'', 'whois': ''}
+@app.route('/', methods=['POST', 'GET'])
+def root():
     
-    return render_template('index2.html', port=APP_PORT, ip_info=result, public_ip=public_ip)
+    result = {'ip':'', 'geolocation':'', 'rdap':'', 'whois': ''}
+    show_your_ip=False
 
-
-@app.route('/list', methods=['POST'])
-def list_():
-    if request.method == 'POST':
-        result = {'ip':'', 'geolocation':'', 'rdap':''}
+    if request.method == 'POST':        
         public_ip = request.form['ipForm']
-        if public_ip:
-            result = handle(ip)
-        return render_template('index2.html', port=APP_PORT, ip_info=result, public_ip=public_ip)
+    
+    if request.method == 'GET':    
+        public_ip = request.headers.get('X-Forwarded-For')
+        show_your_ip=True
+    
+    if public_ip:# and not request.remote_addr == '127.0.0.1': # dev env
+        result = handle(public_ip)
+        
+    return render_template('index2.html', port=APP_PORT, ip_info=result, public_ip=public_ip, show_your_ip=show_your_ip)
 
 
 def handle(ip):
