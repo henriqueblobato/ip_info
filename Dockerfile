@@ -12,6 +12,7 @@ RUN pip install -r "/tmp/requirements.txt"
 
 EXPOSE 5000
 EXPOSE 80
+EXPOSE 8000
 
 ENV FLASK_APP = /tmp/app.py
 ENV SERVER_NAME = '0.0.0.0'
