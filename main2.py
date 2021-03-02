@@ -39,7 +39,7 @@ def hello():
 @app.route('/list', methods=['POST'])
 def list_():
     if request.method == 'POST':
-        result = {}
+        result = {'ip':'', 'geolocation':'', 'rdap':''}
         public_ip = request.form['ipForm']
         if public_ip:
             result = handle(ip)
