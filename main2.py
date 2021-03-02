@@ -39,11 +39,11 @@ def hello():
 @app.route('/list', methods=['POST'])
 def list_():
     if request.method == 'POST':
-        ip = request.form['ipForm']
-        if ip:
+        result = {}
+        public_ip = request.form['ipForm']
+        if public_ip:
             result = handle(ip)
-            return render_template('list2.html', ip_info=result)
-        return render_template('list2.html', ip_info={})
+        return render_template('index2.html', port=APP_PORT, ip_info=result, public_ip=public_ip)
 
 
 def handle(ip):
