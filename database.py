@@ -1,7 +1,5 @@
 import re
-import os
 import redis
-import requests
 
 class Redis():
     def __init__(self, tor_instance, settings) -> None:
@@ -15,6 +13,7 @@ class Redis():
                         port=self.port,
                         password=self.password)
 
+        self.settings = settings
         self.populate_with_tor_exit_nodes()
 
     def get(self, value):
@@ -27,6 +26,7 @@ class Redis():
         response = self.tor_instance.session.get('https://check.torproject.org/exit-addresses')
         tor_ips = re.findall(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", response.text)
         for ip in tor_ips:
-            self.conn.set(f'{ip}tor', 1)
+            # self.conn.set(f'{ip}tor', 1)
+            self.settings.TOR_IPS.append(ip)
         print('\n[!] Update tor exit node with', len(tor_ips), 'ips')
         pass

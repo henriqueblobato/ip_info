@@ -19,7 +19,7 @@ response = requests.get('https://check.torproject.org/exit-addresses')
 tor_ips = re.findall(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", response.text)
 for ip in tor_ips:
     settings.TOR_IPS.append(ip)
-print('\n[!] Update tor exit node with', len(tor_ips), 'ips')
+print('\n[!] Updated tor exit node with', len(tor_ips), 'ips')
 
 @app.route('/')
 def hello():
