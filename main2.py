@@ -23,9 +23,10 @@ print('\n[!] Update tor exit node with', len(tor_ips), 'ips')
 
 @app.route('/')
 def hello():
-    print('Cookies --->', request.cookies)
-    print('Headers --->', request.headers)
-    public_ip = request.remote_addr
+    # print('Cookies --->', request.cookies)
+    # print('Headers --->', request.headers)
+    # public_ip = request.remote_addr
+    public_ip = request.headers.get('X-Forwarded-For')
     print('Got ip from --->', public_ip)
     if not public_ip == '127.0.0.1': # dev env
         result = handle(public_ip)
