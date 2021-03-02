@@ -15,8 +15,9 @@ tor = Tor(settings)
 geo = Geo(tor, settings)
 rdap = Rdap(tor, settings)
 
+ip_regex = r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}"
 response = requests.get('https://check.torproject.org/exit-addresses')
-tor_ips = re.findall(r"\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}", response.text)
+tor_ips = re.findall(ip_regex, response.text)
 for ip in tor_ips:
     settings.TOR_IPS.append(ip)
 print('\n[!] Updated tor exit node with', len(tor_ips), 'ips')
@@ -32,10 +33,10 @@ def root():
     
     if request.method == 'GET':    
         public_ip = request.headers.get('X-Forwarded-For')
-        print('[!] REQUEST FROM:', public_ip)
+        print('[!] REQUEST FROM', public_ip)
         show_your_ip=True
     
-    if public_ip:# and not request.remote_addr == '127.0.0.1': # dev env
+    if public_ip and re.match(ip_regex,public_ip):# and not request.remote_addr == '127.0.0.1': # dev env
         result = handle(public_ip)
         
     return render_template('index2.html', port=APP_PORT, ip_info=result, public_ip=public_ip, show_your_ip=show_your_ip)
@@ -54,14 +55,12 @@ def handle(ip):
     try:
         rdap_info = rdap.get_rdap(ip) # get whois
         ip_dict['rdap'] = rdap_info
-        # print('rdap --->', rdap_info)
     except Exception as e:
         print('[Error rdap]', format(e), type(e))
 
     try:
         whois_info = rdap.get_whois(ip) # get whois    
         ip_dict['whois'] = whois_info
-        # print('whois --->', whois_info)
     except Exception as e:
         print('[Error whois]', format(e), type(e))
 
