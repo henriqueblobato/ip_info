@@ -15,13 +15,14 @@
       <thead>
         <tr>
             <th>Country</th>
+            <th>Hostname</th>
             <th>Is tor node</th>
             <th>City/State</th>
             <th>Organization</th>
             <th>Postal Code</th>
             <th>Local Time</th>
             <th>ip range</th>
-            <th>Address</th>
+            <th>Contact</th>
         </tr>
       </thead>
     </table>
@@ -48,11 +49,16 @@
                 </td>
                 {% if ip_info %}
                   <td>{{ ip_info.geolocation.city }}</br>{{ ip_info.geolocation.region }} </br></td>
+                  <td>{{ ip_info.geolocation.hostname }}</td>
                   <td>{{ ip_info.geolocation.org }}</td>
                   <td>{{ ip_info.geolocation.postal }}</td>
                   <td>{{ ip_info.geolocation.timezone_formated }}</td>
-                  <td>{{ ip_info.rdap.handle }}</td>
-                  <td>{{ ip_info.rdap.address }}</td>
+                  <td>{{ ip_info.whois.NetRange }}</td>
+                  <td>
+                    {{ ip_info.rdap.address }}
+                    {{ ip_info.whois.OrgTechPhone }}
+                    {{ ip_info.whois.Address }}
+                  </td>
                 {% endif %}
               </tr>
       </tbody>
