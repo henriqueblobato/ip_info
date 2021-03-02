@@ -51,8 +51,7 @@ def handle(ip):
     rdap_info = rdap.get_rdap(ip) # get whois
     ip_dict['rdap'] = rdap_info
 
-    whois_info = rdap.get_whois(ip) # get whois
-    print('whois_info -->', whois_info)
+    whois_info = rdap.get_whois(ip) # get whois    
     ip_dict['whois'] = whois_info
     
     ip_dict['is_tor'] = True if ip in settings.TOR_IPS else False
@@ -60,6 +59,7 @@ def handle(ip):
     if not ip_dict['geolocation'] and not ip_dict['rdap']:
         return None
     
+    print('Got --->', ip_dict)
     return ip_dict
 
 if __name__ == '__main__':
