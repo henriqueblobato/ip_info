@@ -50,18 +50,21 @@ def handle(ip):
         ip_dict['geolocation'] = geolocation
         print('geolocation --->', geolocation)
     except Exception as e:
+        ip_dict['geolocation'] = {}
         print('[Error geolocation]', format(e), type(e))
 
     try:
         rdap_info = rdap.get_rdap(ip) # get whois
         ip_dict['rdap'] = rdap_info
     except Exception as e:
+        ip_dict['rdap'] = {}
         print('[Error rdap]', format(e), type(e))
 
     try:
         whois_info = rdap.get_whois(ip) # get whois    
         ip_dict['whois'] = whois_info
     except Exception as e:
+        ip_dict['whois'] = {}
         print('[Error whois]', format(e), type(e))
 
 
