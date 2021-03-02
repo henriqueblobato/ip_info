@@ -59,14 +59,14 @@ def handle(ip):
     try:
         rdap_info = rdap.get_rdap(ip) # get whois
         ip_dict['rdap'] = rdap_info
-        print('rdap --->', rdap_info)
+        # print('rdap --->', rdap_info)
     except Exception as e:
         print('[Error rdap]', format(e), type(e))
 
     try:
         whois_info = rdap.get_whois(ip) # get whois    
         ip_dict['whois'] = whois_info
-        print('whois --->', whois_info)
+        # print('whois --->', whois_info)
     except Exception as e:
         print('[Error whois]', format(e), type(e))
 
