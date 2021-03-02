@@ -27,10 +27,11 @@ def hello():
     print('Got ip from --->', public_ip)
     if not public_ip == '127.0.0.1': # dev env
         result = handle(public_ip)
+        print('result --->', result)
     else:
         result = {'ip':'', 'geolocation':'', 'rdap':''}
     
-    return render_template('index2.html', port=APP_PORT, ip_info=result)
+    return render_template('index2.html', port=APP_PORT, ip_info=result, public_ip=public_ip)
 
 
 @app.route('/list', methods=['POST'])
@@ -60,7 +61,6 @@ def handle(ip):
     if not ip_dict['geolocation'] and not ip_dict['rdap']:
         return None
     
-    print('Got --->', ip_dict)
     return ip_dict
 
 if __name__ == '__main__':
