@@ -32,23 +32,29 @@
       <tbody id="ipsTable">
             <tr>
                 <td>
-                  <img src="https://www.countryflags.io/{{ ip_info.geolocation.country }}/flat/32.png"></br>                
-                </td>
-                <td>
-                  {% if ip_info.is_tor %}
-                    <img width="40" src="https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_60,h_60/https://dashboard.snapcraft.io/site_media/appmedia/2016/03/icon.svg.png" alt="">
-                    </br>
-                  {% else %}
-                    No
+                  {% if ip_info %}
+                    <img src="https://www.countryflags.io/{{ ip_info.geolocation.country }}/flat/32.png"></br>                
                   {% endif %}
                 </td>
-                <td>{{ ip_info.geolocation.city }}</br>{{ ip_info.geolocation.region }} </br></td>
-                <td>{{ ip_info.geolocation.org }}</td>
-                <td>{{ ip_info.geolocation.postal }}</td>
-                <td>{{ ip_info.geolocation.timezone_formated }}</td>
-                <td>{{ ip_info.rdap.handle }}</td>
-                <td>{{ ip_info.rdap.address }}</td>
-            </tr>
+                <td>
+                  {% if ip_info %}
+                    {% if ip_info.is_tor %}
+                      <img width="40" src="https://res.cloudinary.com/canonical/image/fetch/f_auto,q_auto,fl_sanitize,w_60,h_60/https://dashboard.snapcraft.io/site_media/appmedia/2016/03/icon.svg.png" alt="">
+                      </br>
+                    {% else %}
+                      No
+                    {% endif %}
+                  {% endif %}
+                </td>
+                {% if ip_info %}
+                  <td>{{ ip_info.geolocation.city }}</br>{{ ip_info.geolocation.region }} </br></td>
+                  <td>{{ ip_info.geolocation.org }}</td>
+                  <td>{{ ip_info.geolocation.postal }}</td>
+                  <td>{{ ip_info.geolocation.timezone_formated }}</td>
+                  <td>{{ ip_info.rdap.handle }}</td>
+                  <td>{{ ip_info.rdap.address }}</td>
+                {% endif %}
+              </tr>
       </tbody>
     </table>
   </div>
