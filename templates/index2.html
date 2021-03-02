@@ -39,7 +39,7 @@
       <tbody id="ipsTable">
         <tr>
             <td>
-              {% if ip_info.geolocation.country %}
+              {% if ip_info and if ip_info.geolocation.country %}
               <img src="https://www.countryflags.io/{{ ip_info.geolocation.country }}/flat/32.png"></br>
               {% endif %}
             </td>
