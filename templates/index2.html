@@ -70,7 +70,7 @@
           <td>
             {% if ip_info.geolocation.org %}
               {{ ip_info.geolocation.org }} / </br>
-            {% else %}
+            {% endif %}
             {% if ip_info.whois.OrgName %}
               {{ ip_info.whois.OrgName }}
             {% endif %}
