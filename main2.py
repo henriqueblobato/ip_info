@@ -24,6 +24,7 @@ print('\n[!] Update tor exit node with', len(tor_ips), 'ips')
 @app.route('/')
 def hello():
     public_ip = request.remote_addr
+    print('Got ip from --->', public_ip)
     if not public_ip == '127.0.0.1': # dev env
         result = handle(public_ip)
     else:
